@@ -1,0 +1,47 @@
+# Dependencies
+node_modules
+**/node_modules
+
+# Build outputs (except the one we need)
+**/dist
+**/build
+excalidraw-app/dev-dist
+packages/*/dist
+packages/*/build
+examples/*/build
+examples/*/dist
+
+# Development files
+.vscode
+.idea
+*.log
+.DS_Store
+
+# Test files
+coverage
+.nyc_output
+**/__snapshots__
+
+# Documentation (not needed for build)
+dev-docs
+
+# Examples (not needed for main app)
+examples
+
+# Firebase project (not needed for build)
+firebase-project
+
+# Git
+.git
+.gitignore
+
+# Environment files (will be set in Vercel dashboard)
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.tmp
+*.temp
+.cache
+
