@@ -75,12 +75,18 @@ Se você só quer fazer deploy básico sem recursos de colaboração, pode deixa
 
 ### 2. Configurar Projeto
 
-O Vercel detectará automaticamente:
-- **Framework Preset**: Other
-- **Root Directory**: `.` (raiz do projeto)
-- **Build Command**: `yarn build:packages && yarn build`
-- **Output Directory**: `excalidraw-app/build`
-- **Install Command**: `yarn install`
+**IMPORTANTE**: Se o Vercel detectar Next.js incorretamente, configure manualmente:
+
+1. No painel do Vercel, vá em **Settings > General**
+2. Configure manualmente:
+   - **Framework Preset**: `Other` ou `Static Site`
+   - **Root Directory**: `.` (raiz do projeto)
+   - **Build Command**: `yarn build:packages && yarn build`
+   - **Output Directory**: `excalidraw-app/build`
+   - **Install Command**: `yarn install`
+   - **Node.js Version**: `18.x`
+
+O `vercel.json` já contém essas configurações, mas se o Vercel ainda detectar Next.js, configure manualmente no painel.
 
 ### 3. Adicionar Variáveis de Ambiente
 
@@ -127,9 +133,25 @@ ls excalidraw-app/build
 
 ## Troubleshooting
 
+### Erro: "No Next.js version detected"
+
+**Solução**: Este erro ocorre quando o Vercel tenta detectar Next.js automaticamente. O projeto já está configurado para evitar isso:
+- O `vercel.json` tem `"framework": null`
+- O `.vercelignore` exclui o diretório `examples` que contém um projeto Next.js
+- O script `prepare` foi ajustado para não executar husky no ambiente Vercel
+
+Se ainda ocorrer, verifique:
+- Se o `vercel.json` está na raiz do projeto
+- Se o `framework` está definido como `null`
+- Se o `buildCommand` está correto
+
 ### Erro: "Cannot find module @excalidraw/common"
 
 **Solução**: Certifique-se de que o `buildCommand` inclui `yarn build:packages` antes de `yarn build`.
+
+### Erro: "fatal: not a git repository" (husky)
+
+**Solução**: Este é um aviso não crítico. O script `prepare` foi ajustado para ignorar o husky no ambiente Vercel. Pode ser ignorado.
 
 ### Erro: "Build timeout"
 
@@ -148,6 +170,7 @@ ls excalidraw-app/build
 - Verifique a versão do Node.js (deve ser >= 18.0.0)
 - Verifique se o Yarn está sendo usado (não npm)
 - Verifique os logs de build no Vercel para erros específicos
+- Certifique-se de que o `buildCommand` está correto no `vercel.json`
 
 ## Recursos Adicionais
 
