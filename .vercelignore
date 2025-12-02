@@ -27,6 +27,8 @@ dev-docs
 
 # Examples (not needed for main app)
 examples
+examples/with-nextjs
+examples/with-nextjs/**
 
 # Firebase project (not needed for build)
 firebase-project
